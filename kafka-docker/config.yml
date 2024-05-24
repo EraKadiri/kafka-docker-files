@@ -1,0 +1,9 @@
+kafka:
+  clusters:
+    - bootstrapServers: kafka:9092
+      name: kafka
+      securityProtocol: PLAINTEXT
+      auth:
+        type: PLAIN
+        username: admin
+        password: admin
