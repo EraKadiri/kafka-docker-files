@@ -79,6 +79,8 @@ services:
       - CLICKHOUSE_PASSWORD=
       - CLICKHOUSE_DATABASE=default
       - CLICKHOUSE_TZ=Europe/Berlin
+    volumes:
+      - ./clickhouse_db/data:/var/lib/clickhouse
 
 
 volumes:
