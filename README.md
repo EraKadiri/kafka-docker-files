@@ -18,3 +18,6 @@ port: 5672
 
 Rabbit UI: 
 http://localhost:15672/#/
+
+#Postgres :
+https://blog.cadumagalhaes.dev/how-to-setup-a-postgresql-database-with-docker-compose
