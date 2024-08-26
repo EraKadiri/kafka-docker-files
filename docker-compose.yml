@@ -7,8 +7,6 @@ services:
       ZOO_MY_ID: 1
       ZOO_PORT: 2181
       ZOO_SERVERS: server.1=zookeeper:2888:3888
-    networks:
-      - postgres-db-network
 
   kafka:
     image: confluentinc/cp-kafka:4.1.4
@@ -29,8 +27,6 @@ services:
       TOPIC_AUTO_CREATE: 1
       KAFKA_CONSUMER_FETCH_MIN_BYTES: 1024
       KAFKA_FETCH_MIN_BYTES: 1024
-    networks:
-      - postgres-db-network
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -42,8 +38,6 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:19092
     depends_on:
       - kafka
-    networks:
-      - postgres-db-network
 
   rabbitmq:
     build: rabbitmq
@@ -56,8 +50,6 @@ services:
       RABBITMQ_DEFAULT_PASS: guest
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-    networks:
-      - postgres-db-network
 
   neo4j:
     container_name: neo4j
@@ -76,8 +68,6 @@ services:
       - ./neo4j_db/logs:/logs
       - ./neo4j_db/import:/var/lib/neo4j/import
       - ./neo4j_db/plugins:/plugins
-    networks:
-      - postgres-db-network
 
   clickhouse:
     image: clickhouse/clickhouse-server:23.9.1.1854-alpine
@@ -91,8 +81,6 @@ services:
       - CLICKHOUSE_TZ=Europe/Berlin
     volumes:
       - ./clickhouse_db/data:/var/lib/clickhouse
-    networks:
-      - postgres-db-network
 
   postgres:
     image: "postgres:16"
@@ -111,8 +99,6 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
-    networks:
-      - postgres-db-network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -123,8 +109,6 @@ services:
       - 16543:80
     volumes:
       - ./servers.json:/pgadmin4/servers.json
-    networks:
-      - postgres-db-network
 
   debezium:
     image: quay.io/debezium/server:2.5
@@ -141,8 +125,6 @@ services:
       - "8080:8080"
     volumes:
       - ./debezium_conf:/debezium/conf:readonly
-    networks:
-      - postgres-db-network
 
 
 
@@ -157,7 +139,3 @@ volumes:
       type: none
       o: bind
       device: ./data
-
-networks:
-  postgres-db-network:
-    driver: bridge
